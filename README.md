@@ -1,6 +1,6 @@
-# python-kinesis-logger
+# python-kinesis-firehose-logger
 
-[KinesisHandler](kinesishandler/kinesishandler.py) is a [BufferingHandler](https://docs.python.org/2.7/library/logging.handlers.html#logging.handlers.BufferingHandler) that sends logging output to a AWS Kinesis stream.
+[KinesisHandler](kinesishandler/kinesishandler.py) is a [BufferingHandler](https://docs.python.org/2.7/library/logging.handlers.html#logging.handlers.BufferingHandler) that sends logging output to a AWS Kinesis Firehose stream.
 
 It offloads work to a worker thread decoupled by a queue, inspired by [QueueHandler](https://docs.python.org/3.5/library/logging.handlers.html#queuehandler).
 
@@ -8,7 +8,7 @@ It offloads work to a worker thread decoupled by a queue, inspired by [QueueHand
 
 Pip:
 
-    pip install git+https://github.com/joekickass/python-kinesis-logger#egg=kinesishandler
+    pip install git+https://github.com/jasprtrades/python-kinesis-firehose-logger#egg=kinesishandler
 
 Manual:
 
