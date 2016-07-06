@@ -20,7 +20,7 @@ class Worker(object):
     """
     _sentinel = None
 
-    def __init__(self, queue, streamname, region=None, partitionkey="thereisonlyoneshard", ):
+    def __init__(self, queue, streamname, boto_client=boto3, region=None):
         """
         Initialize the worker with queue, Kinesis stream name, AWS region and partition key.
 
@@ -34,7 +34,7 @@ class Worker(object):
         Handle partition key for each record, see comment above.
         """
         self.queue = queue
-        self.firehose = boto3.client('firehose', region_name=region)
+        self.firehose = boto_client.client('firehose', region)
         self.streamname = streamname
         self.partitionkey = partitionkey
         self._stop = threading.Event()
