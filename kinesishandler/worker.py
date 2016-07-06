@@ -34,7 +34,7 @@ class Worker(object):
         Handle partition key for each record, see comment above.
         """
         self.queue = queue
-        self.kinesis = boto3.client('kinesis', region_name=region)
+        self.firehose = boto3.client('firehose', region_name=region)
         self.streamname = streamname
         self.partitionkey = partitionkey
         self._stop = threading.Event()
@@ -43,11 +43,13 @@ class Worker(object):
 
     def validate_stream(self):
         """
-        Validate the specified Kinesis stream
+        Validate the specified Kinesis Firehose stream
 
         Raises exception if the specified stream is not accessible nor active.
         """
-        if 'ACTIVE' != self.kinesis.describe_stream(StreamName=self.streamname)['StreamDescription']['StreamStatus']:
+
+        stream = self.firehose.describe_delivery_stream(DeliveryStreamName=self.streamname)
+        if 'ACTIVE' != stream['DeliveryStreamDescription']['DeliveryStreamStatus']:
             raise ValueError("{} is not active".format(self.streamname))
 
     def start(self):
@@ -75,7 +77,7 @@ class Worker(object):
         and needs to be formatted accordingly.
         """
         def fmt(record):
-            return { 'PartitionKey' : self.partitionkey, 'Data' : record }
+            return { 'Data' : record }
 
         return [fmt(record) for record in records]
 
@@ -87,13 +89,13 @@ class Worker(object):
         """
         data = self.prepare(records)
         try:
-            self.kinesis.put_records(
+            self.firehose.put_record_batch(
                 Records=data,
-                StreamName=self.streamname
+                DeliveryStreamName=self.streamname
             )
-        except:
-            # Just silently drop records if not able to send them
-            pass
+        except Exception as e:
+            # TODO: do something to recover here
+            raise e
 
     def _monitor(self):
         """
@@ -114,8 +116,9 @@ class Worker(object):
                 self.handle(records)
                 if has_task_done:
                     q.task_done()
-            except:
-                pass
+            except Exception as e:
+                # TODO: do something to recover here
+                raise e
 
         # There might still be records in the queue, run until empty
         while True:

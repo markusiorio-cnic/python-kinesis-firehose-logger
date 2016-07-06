@@ -8,7 +8,7 @@ from logging.handlers import BufferingHandler
 
 class KinesisHandler(BufferingHandler):
     """
-    Sends logs in batches to Kinesis
+    Sends logs in batches to Kinesis Firehose
 
     Uses a queue to dispatch batched data to worker thread
     """
