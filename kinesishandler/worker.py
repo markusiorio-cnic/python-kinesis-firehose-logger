@@ -36,7 +36,6 @@ class Worker(object):
         self.queue = queue
         self.firehose = boto_client.client('firehose', region)
         self.streamname = streamname
-        self.partitionkey = partitionkey
         self._stop = threading.Event()
         self._thread = None
         self.validate_stream()
