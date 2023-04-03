@@ -32,7 +32,7 @@ worker = kinesishandler.Worker(q, "exampleStreamName", region="eu-west-1")
 worker.start()
 
 # create formatter and add to handler
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = kinesishandler.SimpleJsonFormatter()
 handler.setFormatter(formatter)
 
 # add handler to logger
