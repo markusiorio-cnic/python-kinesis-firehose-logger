@@ -2,19 +2,22 @@ import json
 import logging
 
 
-class SimpleJsonFormatter(logging.Formatter):
+class SimpleJsonFormatter:
     """
     Simply JSON log formatter for Amazon Kinesis Firehose logging
     """
 
-    def format(self, record) -> str:
+    def __init__(self, formater: logging.Formatter | None = None) -> None:
+        self.formater = formater or logging.Formatter()
+
+    def format(self, record: logging.LogRecord) -> str:
         ret = {}
         for attr, value in record.__dict__.items():
             if attr == "asctime":
-                value = self.formatTime(record)
+                value = self.formater.formatTime(record)
             if attr == "exc_info" and value is not None:
-                value = self.formatException(value)
+                value = self.formater.formatException(value)
             if attr == "stack_info" and value is not None:
-                value = self.formatStack(value)
+                value = self.formater.formatStack(value)
             ret[attr] = value
         return json.dumps(ret)
