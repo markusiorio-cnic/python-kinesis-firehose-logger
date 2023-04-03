@@ -1,3 +1,6 @@
+import json
+import logging
+
 class SimpleJsonFormatter(logging.Formatter):
     """
     Simply JSON log formatter for Amazon Kinesis Firehose logging
