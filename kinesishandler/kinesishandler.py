@@ -12,14 +12,15 @@ class KinesisHandler(BufferingHandler):
 
     Uses a queue to dispatch batched data to worker thread
     """
-    def __init__(self, capacity, queue):
+
+    def __init__(self, capacity, queue) -> None:
         """
         Initialize the handler with buffer size and queue
         """
         BufferingHandler.__init__(self, capacity)
         self.queue = queue
 
-    def prepare(self, records):
+    def prepare(self, records) -> list[str]:
         """
         Prepare data for queuing
 
@@ -27,7 +28,7 @@ class KinesisHandler(BufferingHandler):
         """
         return [self.format(record) for record in records]
 
-    def flush(self):
+    def flush(self) -> None:
         """
         Put buffered data in queue and zap buffer.
         """
