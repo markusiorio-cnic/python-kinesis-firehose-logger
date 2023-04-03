@@ -8,7 +8,7 @@ It offloads work to a worker thread decoupled by a queue, inspired by [QueueHand
 
 Pip:
 
-    pip install git+https://github.com/jasprtrades/python-kinesis-firehose-logger#egg=kinesishandler
+    pip install git+https://github.com/markusiorio-cnic/python-kinesis-firehose-logger#egg=kinesishandler
 
 Manual:
 
@@ -32,7 +32,7 @@ worker = kinesishandler.Worker(q, "exampleStreamName", region="eu-west-1")
 worker.start()
 
 # create formatter and add to handler
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = kinesishandler.SimpleJsonFormatter()
 handler.setFormatter(formatter)
 
 # add handler to logger
