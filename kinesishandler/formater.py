@@ -7,8 +7,8 @@ class SimpleJsonFormatter:
     Simply JSON log formatter for Amazon Kinesis Firehose logging
     """
 
-    def __init__(self, formater: logging.Formatter | None = None) -> None:
-        self.formater = formater or logging.Formatter()
+    def __init__(self, formatter: logging.Formatter | None = None) -> None:
+        self.formatter = formatter or logging.Formatter()
 
     def format(self, record: logging.LogRecord) -> str:
         ret = {}
