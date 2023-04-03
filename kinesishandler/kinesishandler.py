@@ -1,9 +1,6 @@
-import logging 
+import logging
 import logging.handlers as handler
-import typing
-
-if typing.TYPE_CHECKING:
-    from queue import Queue
+import queue
 
 
 class KinesisHandler:
@@ -14,7 +11,10 @@ class KinesisHandler:
     """
 
     def __init__(
-        self, capacity: int, queue: Queue, buffer: handler.BufferingHandler | None = None
+        self,
+        capacity: int,
+        queue: queue.Queue,
+        buffer: handler.BufferingHandler | None = None,
     ) -> None:
         """
         Initialize the handler with buffer size and queue
