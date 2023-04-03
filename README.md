@@ -8,7 +8,7 @@ It offloads work to a worker thread decoupled by a queue, inspired by [QueueHand
 
 Pip:
 
-    pip install git+https://github.com/jasprtrades/python-kinesis-firehose-logger#egg=kinesishandler
+    pip install git+https://github.com/markusiorio-cnic/python-kinesis-firehose-logger#egg=kinesishandler
 
 Manual:
 
